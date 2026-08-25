@@ -1,0 +1,6 @@
+﻿  Game.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\Game.cpp(117,15): warning C4566: 由通用字符名称“\u2011”表示的字符不能在当前代码页(936)中表示出来
+  main.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\main.cpp(185,55): warning C4566: 由通用字符名称“\u25B6”表示的字符不能在当前代码页(936)中表示出来
+  正在生成代码...
+LINK : fatal error LNK1168: 无法打开 C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\x64\Debug\MUD_Game_Of_Cpp_Practice.exe 进行写入
