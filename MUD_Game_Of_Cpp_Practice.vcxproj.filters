@@ -18,5 +18,55 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="saveManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="battleSystem.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="battleSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="saveManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
