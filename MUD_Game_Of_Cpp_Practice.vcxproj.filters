@@ -45,6 +45,9 @@
     <ClCompile Include="battleSystem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="plot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -66,6 +69,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="saveManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="plot.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

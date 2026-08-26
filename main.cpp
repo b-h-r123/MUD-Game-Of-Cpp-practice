@@ -223,6 +223,9 @@ void neonPulse(int cycles = 3) {
 
 // ---------- 主函数 ----------
 int main() {
+    SetConsoleOutputCP(65001);   // 65001 = UTF‑8
+    SetConsoleCP(65001);
+
     // 设置控制台标题
     SetConsoleTitleA("Neon Echo - 霓虹回响");
 
@@ -299,6 +302,8 @@ int main() {
                     std::string name;
                     std::cin >> name;
                     G.player_start(name);
+                    G.chapter(1);
+                    G.showMainMenu();
                 }
                 else if (selected == 1) {
                     // 读取存档

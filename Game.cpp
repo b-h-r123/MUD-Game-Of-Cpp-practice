@@ -2,15 +2,19 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
-void printSlow(const std::string a, int ms)
-{
-    for (int i = 0; a[i] != '\0'; ++i)
-    {
-        std::cout << a[i];
-        std::cout.flush();
-        Sleep(ms);
-    }
-}
+#include"plot.h"
+#include"battleSystem.h"
+#include"saveManager.h"
+
+//void printSlow(const std::string a, int ms)
+//{
+//    for (int i = 0; a[i] != '\0'; ++i)
+//    {
+//        std::cout << a[i];
+//        std::cout.flush();
+//        Sleep(ms);
+//    }
+//}
 // 本地工具函数，设置控制台文字颜色
 static void setColor(WORD color)
 {
@@ -18,7 +22,8 @@ static void setColor(WORD color)
     SetConsoleTextAttribute(hConsole, color);
 }
 
-void game ::showStoryIntro()
+void game ::showStoryIntro() 
+
 {
     system("cls");
 
@@ -32,7 +37,7 @@ void game ::showStoryIntro()
     setColor(0x0E);
     std::cout << "公元 2097 年。\n\n";
     Sleep(200);
-
+   
     // 浅灰色正文 0x07
     setColor(0x07);
     std::cout << "人类社会高度依赖人工智能、义体改造和神经网络。\n\n";
@@ -70,7 +75,6 @@ void game ::showStoryIntro()
         std::cout.flush();
         Sleep(50);
     }
-
     // 浅灰色正文
     setColor(0x07);
     std::cout << "原本负责交通、能源、安防、全城市政管理。\n\n";
@@ -101,22 +105,58 @@ void game ::showStoryIntro()
 }
 void game::player_start(std::string a) {
     name = a;
-    printSlow("===== 下层城区 · 佣兵故事 =====\n", 25);
-    printSlow("【" + name + "】，你是一名挣扎在下层城区的佣兵。\n", 22);
-    printSlow("阴暗潮湿的街巷，霓虹闪烁，大企业掌控着整座城市。\n", 22);
-    printSlow("某天，你的通讯终端收到一条匿名加密信息……\n\n", 22);
-
-    Sleep(800);
-    printSlow("————【匿名消息】————\n", 20);
-    Sleep(400);
-    printSlow("如果你想知道这座城市真正的秘密，就进入企业核心，找到 NEON。\n", 20);
-    Sleep(400);
-    printSlow("——————————————————\n\n", 20);
-
-    Sleep(1000);
-    printSlow("任务目标：潜入城市核心，击败失控的 NEON‑X。\n", 25);
     std::cout << "\a\n";
-    printSlow("姓名：玩家输入\n等级：1\nHP：100 / 100\nATK：20\nEXP：0GOLD：100\nENERGY：5 / 5\n属性点：0",10);
-    printSlow("技能1：电磁脉冲   技能2：过载动能炮", 20);
-    system("cls");
+    printRhythm("姓名：{{name}}\n等级：1\nHP：100 / 100\nATK：20\nEXP：0\nGOLD：100\nENERGY：5 / 5\n属性点：0\n技能1：电磁脉冲   技能2：义肢过载\n",0,name,10);
+    system("pause");
 };
+void game::chapter(int num) {
+    switch (num)
+    {
+        case 1:
+            printRhythm("plot\\part01.txt", 1, name, 20);
+            printRhythm("plot\\part02.txt", 1, name, 20);
+            printRhythm("进入战斗中", 0, name, 200);
+            battle();
+            printRhythm("plot\\part03.txt", 1, name, 20);
+
+        break;
+    }
+
+}
+void game::showMainMenu()
+{
+    int select = 0;
+    std::cout << "\n========= 主菜单 =========\n";
+    std::cout << "1.进入地图\n";
+    std::cout << "2.查看角色状态\n";
+    std::cout << "3.查看背包\n";
+    std::cout << "4.保存游戏\n";
+
+    std::cout << "请输入你的选择：";
+    while (!(std::cin >> select))
+    {
+        // 输入不是数字，清除错误状态
+        std::cin.clear();
+        std::cin.ignore(1024, '\n');
+        std::cout << "输入无效，请输入数字：";
+    }
+
+    // 根据数字分发调用对应接口
+    switch (select)
+    {
+    case 1:
+        enterMap();
+        break;
+    case 2:
+        showPlayerStatus();
+        break;
+    case 3:
+        showBag();
+        break;
+    case 4:
+        saveGame();
+    default:
+        std::cout << "无效选项！\n";
+        break;
+    }
+}
