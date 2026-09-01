@@ -159,4 +159,5 @@ void game::showMainMenu()
         std::cout << "无效选项！\n";
         break;
     }
-}
+};
+
