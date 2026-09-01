@@ -1,9 +1,39 @@
-bin/
-obj/
-/packages/
-riderModule.iml
+# AI development tools
+/.claude/
+/.codex/
+/.cursor/
+/.continue/
+/.aider*
+/AGENTS.md
+/AGENTS.override.md
+/CLAUDE.md
+
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# IDE settings and user-specific files
+/.idea/
+/.vscode/
+/.vs/
+*.iml
+*.code-workspace
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
 /_ReSharper.Caches/
-.vs/
-.claude/
-MUD_Game.41c95b06/
-x64/
+
+# Build outputs and dependencies
+/bin/
+/obj/
+/out/
+/build/
+/cmake-build-*/
+/packages/
+/x64/
+/MUD_Game.41c95b06/
