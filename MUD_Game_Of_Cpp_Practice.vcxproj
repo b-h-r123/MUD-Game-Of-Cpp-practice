@@ -132,7 +132,10 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="saveManager.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="ShopConfig.cpp" />
     <ClCompile Include="skill.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -141,7 +144,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="saveManager.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="ShopConfig.h" />
     <ClInclude Include="skill.h" />
+    <ClInclude Include="Upgrade.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
