@@ -1,48 +1,50 @@
-#include "Game.h"
+ï»¿#include "Game.h"
 #include "ui.h"
 #include <conio.h>
 #include <string>
 
+
 int main() {
-    // ¿ØÖÆÌ¨³õÊ¼»¯
+    // æ§åˆ¶å°åˆå§‹åŒ–
     initConsole();
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
 
     int selected = 0;
     auto items = getMenuItems();
 
-    // Ö÷²Ëµ¥Ñ­»·
+    // ä¸»èœå•å¾ªç¯
     while (true) {
-        // äÖÈ¾Õû¸öÆô¶¯½çÃæ
+        // æ¸²æŸ“æ•´ä¸ªå¯åŠ¨ç•Œé¢
         renderStartScreen(selected);
 
-        // ¶ÁÈ¡°´¼ü
+        // è¯»å–æŒ‰é”®
         int key = _getch();
         if (key == 0 || key == 224) {
-            // ·½Ïò¼üË«×Ö½Ú´¦Àí
+            // æ–¹å‘é”®åŒå­—èŠ‚å¤„ç†
             int arrow = _getch();
             switch (arrow) {
-            case 72: // ÉÏ
+            case 72: // ä¸Š
                 selected = (selected - 1 + (int)items.size()) % items.size();
                 break;
-            case 80: // ÏÂ
+            case 80: // ä¸‹
                 selected = (selected + 1) % items.size();
                 break;
             }
         }
         else {
             switch (key) {
-            case 13: // Enter È·ÈÏ
+            case 13: // Enter ç¡®è®¤
                 clearScreen();
                 if (selected == 0) {
-                    // ĞÂÓÎÏ·Á÷³Ì
+                    // æ–°æ¸¸æˆæµç¨‹
                     printNewGameInit();
                     system("pause");
-
                     game G;
                     G.game_id = 0;
                     G.showStoryIntro();
 
-                    typePrint("  >>ÊäÈëÄãµÄÃû×Ö\n", CYAN, 30);
+                    std::cout << "è¾“å…¥ä½ çš„åå­—\n" << std::endl;
                     std::string name;
                     std::cin >> name;
 
@@ -51,12 +53,12 @@ int main() {
                     G.showMainMenu();
                 }
                 else if (selected == 1) {
-                    // ¶ÁÈ¡´æµµÁ÷³Ì
+                    // è¯»å–å­˜æ¡£æµç¨‹
                     printNoSaveFile();
                     system("pause");
                 }
                 else if (selected == 2) {
-                    // ÍË³öÓÎÏ·
+                    // é€€å‡ºæ¸¸æˆ
                     clearScreen();
                     printExitMessage();
                     Sleep(800);
@@ -64,7 +66,7 @@ int main() {
                 }
                 break;
 
-            case 27: // Esc ÍË³ö
+            case 27: // Esc é€€å‡º
                 clearScreen();
                 printEscExitMessage();
                 Sleep(600);

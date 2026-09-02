@@ -131,23 +131,27 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="plot.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="saveManager.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="ui.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="plot.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="saveManager.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="ui.h" />
+    <ClInclude Include="Upgrade.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

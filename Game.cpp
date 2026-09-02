@@ -5,6 +5,7 @@
 #include"plot.h"
 #include"battleSystem.h"
 #include"saveManager.h"
+#include"map.h"
 
 //void printSlow(const std::string a, int ms)
 //{
@@ -124,40 +125,60 @@ void game::chapter(int num) {
 
 }
 void game::showMainMenu()
+        
 {
-    int select = 0;
-    std::cout << "\n========= 主菜单 =========\n";
-    std::cout << "1.进入地图\n";
-    std::cout << "2.查看角色状态\n";
-    std::cout << "3.查看背包\n";
-    std::cout << "4.保存游戏\n";
+    bool quit = false;  // 循环退出标志
 
-    std::cout << "请输入你的选择：";
-    while (!(std::cin >> select))
+    while (!quit)  // 循环显示菜单，直到主动退出
     {
-        // 输入不是数字，清除错误状态
-        std::cin.clear();
-        std::cin.ignore(1024, '\n');
-        std::cout << "输入无效，请输入数字：";
-    }
+        system("cls");  // 每次重新显示菜单前清屏
+        int select = 0;
 
-    // 根据数字分发调用对应接口
-    switch (select)
-    {
-    case 1:
-        enterMap();
-        break;
-    case 2:
-        showPlayerStatus();
-        break;
-    case 3:
-        showBag();
-        break;
-    case 4:
-        saveGame();
-    default:
-        std::cout << "无效选项！\n";
-        break;
-    }
-};
+        std::cout << "\n========= 主菜单 =========\n";
+        std::cout << "1.进入地图\n";
+        std::cout << "2.查看角色状态\n";
+        std::cout << "3.查看背包\n";
+        std::cout << "4.保存游戏\n";
+        std::cout << "5.退出菜单\n";  // 新增退出选项
+        std::cout << "请输入你的选择：";
 
+        // 输入合法性校验（保留原逻辑）
+        while (!(std::cin >> select))
+        {
+            std::cin.clear();
+            std::cin.ignore(1024, '\n');
+            std::cout << "输入无效，请输入数字：";
+        }
+
+        // 选项分发
+        switch (select)
+        {
+        case 1:
+            move();          // 执行地图函数
+            break;           // 跳出switch，回到while循环开头，重新显示菜单
+        case 2:
+            showPlayerStatus();
+            break;
+        case 3:
+            showBag();
+            break;
+        case 4:
+            saveGame();
+            break;           // 修复原代码：缺少break会穿透到default
+        case 5:
+            quit = true;     // 标记退出，结束while循环
+            break;
+        default:
+            std::cout << "无效选项！\n";
+            break;
+        }
+
+        // —— 可选优化：执行完功能后暂停，避免立刻清屏跳回菜单 ——
+        if (!quit)
+        {
+            std::cout << "\n按任意键返回菜单...";
+            std::cin.ignore();  // 吃掉输入缓冲区残留的换行符
+            std::cin.get();     // 等待用户按键
+        }
+    }
+}

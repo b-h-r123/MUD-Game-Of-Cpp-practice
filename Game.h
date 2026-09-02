@@ -2,10 +2,10 @@
 #include <string>
 #include"plot.h"
 #include"battleSystem.h"
-#include"Room.h"
 #include"Player.h"
 #include"saveManager.h"
-class game :public Plot,BattleSystem,Room,Player,saveManager{
+#include"map.h"
+class game :public Plot,BattleSystem,Player,saveManager,Map{
 public:
 	int game_id;
 	void showStoryIntro();
