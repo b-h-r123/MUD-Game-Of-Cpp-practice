@@ -1,6 +1,6 @@
 #pragma once
 
-#include<vector>
+#include <vector>
 #include "Enemy.h"
 #include "Player.h"
 #include "Room.h"
@@ -10,24 +10,23 @@
 class Game
 {
 public:
-	Game(); //¹¹Ôìº¯Êı
-	void start();	//ÓÎÏ·¿ªÊ¼ÓëÔËĞĞ
-	void mainMenu();	//ÓÎÏ·Ö÷²Ëµ¥£¨¿ªÊ¼ĞÂÓÎÏ·¡¢¼ÓÔØ¾ÉÓÎÏ·¡¢ÍË³öÓÎÏ·£©	
-	void startNewGame();	//¿ªÊ¼ĞÂÓÎÏ·
-	void loadingOldGame();	//¼ÓÔØ¾ÉÓÎÏ·
-	void chooseRoom();	//Ñ¡¹Ø½çÃæ
-	void enterNowRoom(int roomNum);		//½øÈëµ±Ç°¹Ø¿¨
-	void victory();	//Ê¤Àû½çÃæ
-	void defeat();	//Ê§°Ü½çÃæ
-	void showShop();	//ÉÌµê½çÃæ
-	void showUpgrade();	//Éı¼¶½çÃæ
-	void showBag();	//±³°ü½çÃæ
-	void showPlayerState();	//Íæ¼Ò×´Ì¬½çÃæ
-	void saveGame();	//±£´æÓÎÏ·
-	void loadGame();	//¼ÓÔØÓÎÏ·
-	//TODO: Ìí¼ÓÓÎÏ·¿ªÊ¼¡¢¼ÓÔØµÈ¹¦ÄÜ£¬°üÀ¨¼ÓÔØ½øÈë²Ëµ¥µÈ
+	Game();							// æ„é€ å‡½æ•°
+	void start();					// æ¸¸æˆå¼€å§‹ä¸»å¾ªç¯
+	void mainMenu();				// æ¸¸æˆä¸»èœå•ï¼ˆå¼€å§‹æ–°æ¸¸æˆã€åŠ è½½æ—§æ¸¸æˆã€é€€å‡ºæ¸¸æˆï¼‰
+	void startNewGame();			// å¼€å§‹æ–°æ¸¸æˆ
+	void loadingOldGame();			// åŠ è½½æ—§æ¸¸æˆ
+	void chooseRoom();				// é€‰å…³è¿›å…¥
+	void enterNowRoom(int roomNum);	// è¿›å…¥å½“å‰å…³å¡
+	void victory();					// èƒœåˆ©ç»“å±€
+	void defeat();					// å¤±è´¥ç»“å±€
+	void showShop();				// å•†åº—ç•Œé¢
+	void showUpgrade();				// å¼ºåŒ–ç•Œé¢
+	void showBag();					// èƒŒåŒ…ç•Œé¢
+	void showPlayerState();			// ç©å®¶çŠ¶æ€ç•Œé¢
+	void saveGame();				// ä¿å­˜æ¸¸æˆ
+	void loadGame();				// è¯»å–æ¸¸æˆ
 private:
-	Player player; 
+	Player player;
 	std::vector<Room> rooms;
 	BattleSystem battleSystem;
 	SaveManager saveManager;

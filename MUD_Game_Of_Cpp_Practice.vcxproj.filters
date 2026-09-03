@@ -39,9 +39,6 @@
     <ClCompile Include="saveManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="battleSystem.h">
-      <Filter>头文件</Filter>
-    </ClCompile>
     <ClCompile Include="battleSystem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -66,6 +63,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="saveManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="battleSystem.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,13 +1,14 @@
 #pragma once
 
-#include<iostream>
-#include<fstream>
-#include<string>
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "item.h"
 #include "Player.h"
 
 class SaveManager
 {
+public:
 	void saveGame(const std::string& filename, const std::string& data)
 	{
 		std::ofstream outFile(filename);
@@ -15,14 +16,13 @@ class SaveManager
 		{
 			outFile << data;
 			outFile.close();
-			std::cout << "ÓÎÏ·ÒÑ±£´æµ½ " << filename << std::endl;
+			std::cout << "æ¸¸æˆå·²ä¿å­˜åˆ° " << filename << std::endl;
 		}
 		else
 		{
-			std::cerr << "ÎÞ·¨´ò¿ªÎÄ¼þ " << filename << " ½øÐÐ±£´æ¡£" << std::endl;
+			std::cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶ " << filename << " è¿›è¡Œä¿å­˜ã€‚" << std::endl;
 		}
 	}
-
 
 private:
 	Player player;
