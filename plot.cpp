@@ -7,7 +7,6 @@
 #include <ctime>
 #include <thread>
 #include <chrono>
-
 #ifdef _WIN32
 #include <windows.h>
 #include <conio.h>   // _kbhit _getch
@@ -16,7 +15,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #endif
-
 // 辅助：非阻塞检测是否按下空格
 static bool checkSpaceKey()
 {
@@ -87,10 +85,9 @@ static void resetColor()
     std::cout << "\033[0m";
 #endif
 }
-
-
 void Plot:: printRhythm(const std::string& input, bool isFile, const std::string& playerName, int delayMs)
 {
+
     std::string content;
 
     if (isFile)

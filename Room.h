@@ -60,6 +60,7 @@ enum class RoomState
 };
 
 class Room
+
 {
 public:
     // 构造一个房间的数据记录。前五项组成地图固定配置，initialState 是新游戏状态。
@@ -123,3 +124,4 @@ std::vector<Room> createDefaultRooms();
 // 找不到时返回空指针，使非法输入或损坏的存档不会直接造成数组越界。
 Room* findRoomById(std::vector<Room>& rooms, RoomId id);
 const Room* findRoomById(const std::vector<Room>& rooms, RoomId id);
+

@@ -8,8 +8,8 @@
 #include <windows.h>
 using namespace std;
 
-// initRooms 的网格下标 -> RoomId 的映射（顺序与 initRooms 中 12 个房间一一对应）。
-// 权限判断统一以 Room.cpp 中 createDefaultRooms() 生成的 Room 状态为准。
+// 权限判断统一以 Room.cpp 中 createDefaultRooms() 生成的 Room 状态为准，
+// 实际状态由 Game 持有并在主线通关后更新，move() 直接读取同一份进度。
 static const RoomId GRID_TO_ROOM[12] =
 {
     RoomId::MAIN_1,         // 0  主线房1
@@ -158,14 +158,14 @@ string buildFrame(const Map rooms[], int p)
     return s;
 }
 
-void move()
+// 在地图上移动：rooms 是 Game 持有的共享房间进度，避免每次进入地图都重置解锁状态。
+void move(std::vector<Room>& rooms)
 {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cci = { 1, FALSE };
     SetConsoleCursorInfo(hOut, &cci);
     Map grid[12];
     initRooms(grid);
-    std::vector<Room> rooms = createDefaultRooms();
     int p = 0;
     while (true)
     {

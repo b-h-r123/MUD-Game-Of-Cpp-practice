@@ -23,6 +23,17 @@ static void setColor(WORD color)
     SetConsoleTextAttribute(hConsole, color);
 }
 
+// 六个主线房间的名称，用于通关流程中“已通关 / 解锁下一房间”的提示
+static const char* ROOM_NAMES[6] =
+{
+    "废土入口",
+    "黑市街区",
+    "工业工厂",
+    "实验区域",
+    "企业核心区",
+    "NEON 核心"
+};
+
 void game ::showStoryIntro() 
 
 {
@@ -110,20 +121,98 @@ void game::player_start(std::string a) {
     printRhythm("姓名：{{name}}\n等级：1\nHP：100 / 100\nATK：20\nEXP：0\nGOLD：100\nENERGY：5 / 5\n属性点：0\n技能1：电磁脉冲   技能2：义肢过载\n",0,name,10);
     system("pause");
 };
+
+
+
 void game::chapter(int num) {
     switch (num)
     {
-        case 1:
-            printRhythm("plot\\part01.txt", 1, name, 20);
-            printRhythm("plot\\part02.txt", 1, name, 20);
-            printRhythm("进入战斗中", 0, name, 200);
-            battle();
-            printRhythm("plot\\part03.txt", 1, name, 20);
+    case 1: // 第一章：废土入口
+        printRhythm("plot\\ch1_1.txt", 1, name, 20);
+        printRhythm("plot\\ch1_2.txt", 1, name, 20);
+        printRhythm("进入战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch1_3.txt", 1, name, 20);
+        break;
 
+    case 2: // 第二章：黑市街区
+        printRhythm("plot\\ch2_1.txt", 1, name, 20);
+        printRhythm("plot\\ch2_2.txt", 1, name, 20);
+        printRhythm("进入战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch2_3.txt", 1, name, 20);
+        break;
+
+    case 3: // 第三章：工业工厂
+        printRhythm("plot\\ch3_1.txt", 1, name, 20);
+        printRhythm("plot\\ch3_2.txt", 1, name, 20);
+        printRhythm("进入战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch3_3.txt", 1, name, 20);
+        break;
+
+    case 4: // 第四章：实验区域
+        printRhythm("plot\\ch4_1.txt", 1, name, 20);
+        printRhythm("plot\\ch4_2.txt", 1, name, 20);
+        printRhythm("进入战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch4_3.txt", 1, name, 20);
+        break;
+
+    case 5: // 第五章：企业核心区
+        printRhythm("plot\\ch5_1.txt", 1, name, 20);
+        printRhythm("plot\\ch5_2.txt", 1, name, 20);
+        printRhythm("进入战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch5_3.txt", 1, name, 20);
+        break;
+
+    case 6: // 第六章：NEON 核心（Boss）
+        printRhythm("plot\\ch6_1.txt", 1, name, 20);
+        printRhythm("plot\\ch6_2.txt", 1, name, 20);
+        printRhythm("进入最终战斗中", 0, name, 200);
+        battle();
+        printRhythm("plot\\ch6_3.txt", 1, name, 20);
+        break;
+
+    default:
         break;
     }
+};
+bool game::gameOver(int currentHp)
+{
+    if (currentHp >= 0)
+        return false;   // 生命值未小于 0，无需结束
 
+    system("cls");
+    setColor(0x0C);
+    std::cout << "\n\n\t\t============================================\n";
+    std::cout << "\t\t             GAME OVER  游戏结束\n";
+    std::cout << "\t\t============================================\n\n";
+    std::cout << "\t\t           你已死亡，任务失败...\n\n";
+    std::cout << "\t\t============================================\n\n";
+
+    char choice = 0;
+    while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+    {
+        setColor(0x0E);
+        std::cout << "是否重新开始游戏？(Y/N)：";
+        std::cin >> choice;
+        std::cin.clear();
+        std::cin.ignore(1024, '\n');
+    }
+
+    setColor(0x07);
+    system("cls");
+    if (choice == 'Y' || choice == 'y')
+    {
+        std::cout << "游戏重新开始...\n";
+        return true;
+    }
+    std::cout << "感谢游玩，再见！\n";
+    return false;
 }
+
 void game::showMainMenu()
         
 {
@@ -154,7 +243,7 @@ void game::showMainMenu()
         switch (select)
         {
         case 1:
-            move();          // 执行地图函数
+            move(rooms);     // 执行地图函数（使用与主线共享的房间进度）
             break;           // 跳出switch，回到while循环开头，重新显示菜单
         case 2:
             showPlayerStatus();
@@ -181,4 +270,86 @@ void game::showMainMenu()
             std::cin.get();     // 等待用户按键
         }
     }
+}
+
+game::game() : rooms(createDefaultRooms())
+{
+}
+
+// 新游戏主线流程：依次通关房间 1~6，战斗一律直接判定完成并解锁下一房间。
+// 每通关一个房间就把进度写回与地图共享的 rooms，并给玩家打开菜单的机会。
+void game::playStory()
+{
+    system("cls");
+    for (int room = 1; room <= 6; ++room)
+    {
+        chapter(room);
+
+        // 与地图共用同一份房间状态：标记本房间通关，并解锁以它为前置的房间
+        // （与 map.cpp tryEnter 中的解锁逻辑保持一致，Room.cpp 负责状态机约束）
+        Room* cur = findRoomById(rooms, static_cast<RoomId>(room));
+        if (cur != 0 && cur->getState() == RoomState::AVAILABLE && !cur->isRepeatable())
+        {
+            cur->markCleared();
+            for (std::vector<Room>::iterator it = rooms.begin(); it != rooms.end(); ++it)
+            {
+                if (it->getState() == RoomState::LOCKED &&
+                    it->getUnlockPrerequisite() == cur->getId())
+                {
+                    it->unlock();
+                }
+            }
+        }
+
+        setColor(0x0A);
+        std::cout << "\n--------------------------------------------\n";
+        std::cout << "  「" << ROOM_NAMES[room - 1] << "」已通关！\n";
+        if (room < 6)
+        {
+            std::cout << "  已解锁下一房间：「" << ROOM_NAMES[room] << "」\n";
+        }
+        std::cout << "--------------------------------------------\n";
+        setColor(0x07);
+
+        // 每次通关后，给予玩家打开游戏菜单的机会（查看状态 / 背包 / 保存 / 进入地图）
+        char choice = 0;
+        while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+        {
+            setColor(0x0E);
+            std::cout << "\n是否打开游戏菜单？(Y=打开 / N=直接继续)：";
+            std::cin >> choice;
+            std::cin.clear();
+            std::cin.ignore(1024, '\n');
+        }
+        setColor(0x07);
+        if (choice == 'Y' || choice == 'y')
+        {
+            showMainMenu();
+        }
+        system("cls");
+    }
+
+    showVictory();
+}
+
+// 通关画面：击败 Boss（房间6）后展示
+void game::showVictory()
+{
+    system("cls");
+
+    setColor(0x0B);
+    std::cout << "\n\t\t============================================\n";
+    std::cout << "\t\t            GAME CLEAR  通关成功\n";
+    std::cout << "\t\t============================================\n\n";
+
+    setColor(0x0A);
+    std::cout << "\t\t你击败了失控的 NEON-X，天穹城恢复了平静。\n\n";
+
+    setColor(0x0E);
+    std::cout << "\t\t感谢游玩《霓虹回响 · 智械危机》！\n\n";
+
+    setColor(0x07);
+    std::cout << "\n\t\t按任意键返回主菜单...\n";
+    system("pause>nul");
+    system("cls");
 }

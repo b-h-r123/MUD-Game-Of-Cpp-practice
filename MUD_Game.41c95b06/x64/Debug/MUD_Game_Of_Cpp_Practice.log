@@ -1,2 +1,552 @@
-﻿  map.cpp
+﻿  battleSystem.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x50 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x52 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x53 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x54 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x55 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x58 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x59 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x60 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x62 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x63 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x67 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“battleSystem.cpp”)
+  
+  battleSystem.h
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x50 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x52 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x53 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x54 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x55 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x58 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x59 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x60 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x62 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x63 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x67 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  Enemy.cpp
+  Game.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x50 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x52 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x53 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x54 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x55 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x58 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x59 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x60 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x62 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x63 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x67 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“Game.cpp”)
+  
+  item.cpp
+  main.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x4e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x50 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x52 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x53 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x54 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x55 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x58 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x59 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x5e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x60 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x62 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x63 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\battleSystem.h(1,1): warning C4828: 文件包含在偏移 0x67 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x75 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x76 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x78 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x7a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x7b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x81 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x84 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x85 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x87 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x88 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x8b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x8c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x30d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x30f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x311 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x313 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x315 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x35f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x362 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x363 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x365 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c5 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c6 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c8 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3ca 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3cb 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3cc 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3d0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x403 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x404 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x406 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x408 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x409 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x410 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a2 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a4 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x50c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x50e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x511 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x596 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x599 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x600 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x602 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x646 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x648 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x696 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x697 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x698 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x699 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x69a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x69e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x6a0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x6a1 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“main.cpp”)
+  
+  map.cpp
+  Player.cpp
+  plot.cpp
+  Room.cpp
+  saveManager.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\saveManager.cpp(1,9): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  skill.cpp
+  ui.cpp
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x75 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x76 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x78 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x7a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x7b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x81 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x84 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x85 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x87 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x88 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x8b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x8c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x30d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x30f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x311 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x313 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x315 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x35f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x362 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x363 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x365 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c5 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c6 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3c8 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3ca 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3cb 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3cc 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x3d0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x403 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x404 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x406 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x408 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x409 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x40f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x410 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a2 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x4a4 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x50c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x50e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x511 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x596 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x599 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x600 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x602 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x646 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x648 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x64f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x696 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x697 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x698 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x699 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x69a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x69e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x6a0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\ui.h(1,1): warning C4828: 文件包含在偏移 0x6a1 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+  (编译源文件“ui.cpp”)
+  
+  Upgrade.cpp
+  正在生成代码...
+MUD_Game.41c95b06\x64\Debug\battleSystem.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
   MUD_Game_Of_Cpp_Practice.vcxproj -> C:\Users\HP\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\x64\Debug\MUD_Game_Of_Cpp_Practice.exe

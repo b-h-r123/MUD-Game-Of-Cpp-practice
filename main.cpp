@@ -2,10 +2,8 @@
 #include "ui.h"
 #include <conio.h>
 #include <string>
-
-
-int main() {
-    // 控制台初始化
+int main(){
+ 
     initConsole();
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
@@ -49,8 +47,7 @@ int main() {
                     std::cin >> name;
 
                     G.player_start(name);
-                    G.chapter(1);
-                    G.showMainMenu();
+                    G.playStory();
                 }
                 else if (selected == 1) {
                     // 读取存档流程
@@ -74,6 +71,5 @@ int main() {
             }
         }
     }
-
     return 0;
 }

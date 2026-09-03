@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
+#include "Room.h"
 
 struct Map
 {
@@ -9,6 +11,6 @@ struct Map
 
 void initRooms(Map rooms[]);
 std::string buildFrame(const Map rooms[], int p);
-void move();
+void move(std::vector<Room>& rooms);
 
 
