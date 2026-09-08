@@ -40,12 +40,19 @@ static void tryEnter(const Map grid[], std::vector<Room>& rooms, int& p, int nxt
     }
 
     Room* target = findRoomById(rooms, GRID_TO_ROOM[nxt]);
+
     if (target != 0 && target->canEnter())
     {
         p = nxt;
         cout << "\n已成功进入「" << grid[nxt].name << "」。\n";
-        // 进入一次性房间后视为完成其内容，并解锁以它为前置的房间（对应 Room.cpp 的状态机）
-        if (target->getState() == RoomState::AVAILABLE && !target->isRepeatable())
+        // 进入一次性房间后视为完成其内容，并解锁以它为前置的房间（对应 Room.cpp 的状态机）。
+        // 主线战斗房 / Boss 房除外：它们的 CLEARED 状态只能由对应章节的剧情战斗打出来
+        // （battle() 成功时写入）。这里只允许玩家“走进”已解锁的下一章主线房，
+        // 但不在此标记通关，因此也不会越级解锁再后面的主线房。
+        bool isMainStoryRoom = (target->getType() == RoomType::MAIN_BATTLE ||
+                                target->getType() == RoomType::BOSS);
+        if (target->getState() == RoomState::AVAILABLE && !target->isRepeatable() &&
+            !isMainStoryRoom)
         {
             target->markCleared();
             for (std::vector<Room>::iterator it = rooms.begin(); it != rooms.end(); ++it)
@@ -62,7 +69,10 @@ static void tryEnter(const Map grid[], std::vector<Room>& rooms, int& p, int nxt
     {
         const Room* pre = target != 0 ? findRoomById(rooms, target->getUnlockPrerequisite()) : 0;
         cout << "\n无法进入「" << grid[nxt].name << "」：该位置尚未对你开放。";
-        if (pre != 0) cout << "（需先通关「" << pre->getName() << "」）";
+        if (pre != 0)
+        {
+            cout << "（需先通关「" << pre->getName() << "」）";
+        }
         cout << "\n";
     }
     _getch();
@@ -169,7 +179,7 @@ void move(std::vector<Room>& rooms)
     int p = 0;
     while (true)
     {
-        SetConsoleCursorPosition(hOut, { 0, 0 });
+        system("cls");   // 每次操作后刷新控制台，清除上一次帧和下方提示的残留文字
         cout << buildFrame(grid, p);
         cout.flush();
         char key = tolower(_getch());

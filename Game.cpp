@@ -131,7 +131,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch1_1.txt", 1, name, 20);
         printRhythm("plot\\ch1_2.txt", 1, name, 20);
         printRhythm("进入战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch1_3.txt", 1, name, 20);
         break;
 
@@ -139,7 +139,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch2_1.txt", 1, name, 20);
         printRhythm("plot\\ch2_2.txt", 1, name, 20);
         printRhythm("进入战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch2_3.txt", 1, name, 20);
         break;
 
@@ -147,7 +147,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch3_1.txt", 1, name, 20);
         printRhythm("plot\\ch3_2.txt", 1, name, 20);
         printRhythm("进入战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch3_3.txt", 1, name, 20);
         break;
 
@@ -155,7 +155,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch4_1.txt", 1, name, 20);
         printRhythm("plot\\ch4_2.txt", 1, name, 20);
         printRhythm("进入战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch4_3.txt", 1, name, 20);
         break;
 
@@ -163,7 +163,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch5_1.txt", 1, name, 20);
         printRhythm("plot\\ch5_2.txt", 1, name, 20);
         printRhythm("进入战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch5_3.txt", 1, name, 20);
         break;
 
@@ -171,7 +171,7 @@ void game::chapter(int num) {
         printRhythm("plot\\ch6_1.txt", 1, name, 20);
         printRhythm("plot\\ch6_2.txt", 1, name, 20);
         printRhythm("进入最终战斗中", 0, name, 200);
-        battle();
+        battle(num, rooms);
         printRhythm("plot\\ch6_3.txt", 1, name, 20);
         break;
 
@@ -283,23 +283,9 @@ void game::playStory()
     system("cls");
     for (int room = 1; room <= 6; ++room)
     {
+        // 每个房间的剧情 + 战斗；战斗胜利时 battle() 返回 1，
+        // 并在内部把该房间标记为已通关、解锁以它为前置的房间（与 Room 状态同步）
         chapter(room);
-
-        // 与地图共用同一份房间状态：标记本房间通关，并解锁以它为前置的房间
-        // （与 map.cpp tryEnter 中的解锁逻辑保持一致，Room.cpp 负责状态机约束）
-        Room* cur = findRoomById(rooms, static_cast<RoomId>(room));
-        if (cur != 0 && cur->getState() == RoomState::AVAILABLE && !cur->isRepeatable())
-        {
-            cur->markCleared();
-            for (std::vector<Room>::iterator it = rooms.begin(); it != rooms.end(); ++it)
-            {
-                if (it->getState() == RoomState::LOCKED &&
-                    it->getUnlockPrerequisite() == cur->getId())
-                {
-                    it->unlock();
-                }
-            }
-        }
 
         setColor(0x0A);
         std::cout << "\n--------------------------------------------\n";
