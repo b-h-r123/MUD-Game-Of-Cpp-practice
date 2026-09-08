@@ -8,6 +8,12 @@
 #include <thread>
 #include <vector>
 
+#include "map.h"
+#include "plot.h"
+
+// 主线六个房间的显示名，用于通关提示。
+std::string roomDisplayName(int num);
+
 const int cCyan    = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 const int cMagenta = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 const int cYellow  = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
@@ -188,7 +194,10 @@ void showStoryIntro()
 	clearScreen();
 }
 
-Game::Game() {}
+Game::Game()
+	: rooms(createDefaultRooms())
+{
+}
 
 void Game::start()
 {
@@ -319,8 +328,156 @@ void Game::startNewGame()
 		}
 	}
 
+	// 开新局：清掉旧的解锁进度并重置地图。
+	rooms = createDefaultRooms();
+	roomNum = 1;
+
+	clearScreen();
+	printTopLine();
+	printCentered("在出发之前，先告诉夜行者你的名字：", cCyan);
+	setColor(cGray);
+	std::cout << "\n\n\t\t请输入名字：";
+	setColor(cWhite);
+	std::string name;
+	std::cin >> name;
+	playerName_ = name;
+	clearKeys();
+	clearScreen();
+
 	showStoryIntro();
-	chooseRoom();
+
+	// 输入缓冲修复：清掉剧情动画期间攒下的多余按键。
+	clearKeys();
+
+	// 从第一间主线房开始主线剧情。
+	playMainStory();
+}
+
+// 游戏内菜单：主角在剧情间隙可自由选择做什么。
+void Game::showInGameMenu()
+{
+	while (true)
+	{
+		clearScreen();
+		printTopLine();
+		printCentered("游 戏 菜 单", cCyan);
+		std::cout << "\n";
+		setColor(cGray);
+		std::cout << "\t\t[1] 进入地图自由探索\n";
+		std::cout << "\t\t[2] 查看玩家状态\n";
+		std::cout << "\t\t[3] 打开背包\n";
+		std::cout << "\t\t[4] 保存游戏\n";
+		std::cout << "\t\t[0] 返回主线\n";
+		setColor(cWhite);
+		printBottomLine();
+
+		int key = _getch();
+		if (key == '1')
+		{
+			clearScreen();
+			chooseRoom();			// 在地图上自由移动
+		}
+		else if (key == '2')
+		{
+			showPlayerState();
+		}
+		else if (key == '3')
+		{
+			showBag();
+		}
+		else if (key == '4')
+		{
+			saveGame();
+		}
+		else if (key == '0' || key == 27)
+		{
+			return;
+		}
+	}
+}
+
+// 主线流程：从第 1 章一路打到第 6 章 Boss。
+void Game::playMainStory()
+{
+	// 与 cxz-task 一致：六个主线房间按顺序推进，一章一仗。
+	for (int n = 1; n <= 6; ++n)
+	{
+		chapter(n);
+
+		// 每个房间打通后，给玩家一个打开菜单的机会。
+		char choice = 0;
+		while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+		{
+			setColor(cYellow);
+			std::cout << "\n是否打开游戏菜单？(Y=打开 / N=直接继续)：";
+			setColor(cWhite);
+			choice = (char)_getch();
+			if (choice == 224 || choice == 0)
+				choice = (char)_getch();
+			std::cout << "\n";
+		}
+		if (choice == 'Y' || choice == 'y')
+		{
+			showInGameMenu();
+		}
+		clearKeys();
+		clearScreen();
+	}
+
+	victory();
+}
+
+// 单个章节：播一章开头的剧情 → 触发对应房间的战斗 → 播一章结尾的剧情。
+void Game::chapter(int num)
+{
+	clearScreen();
+	printTopLine();
+	setColor(cCyan);
+	std::cout << "\n\t\t======== 第 " << num << " 章 ========\n\n";
+	setColor(cWhite);
+	printBottomLine();
+
+	std::string chapterTag = "plot\\ch" + std::to_string(num) + "_";
+
+	// 章节开头的过场剧情。
+	printRhythm(chapterTag + "1.txt", true, playerName_, 20);
+	printRhythm(chapterTag + "2.txt", true, playerName_, 20);
+
+	clearKeys();
+	std::cout << "\n\n按任意键进入战斗...\n";
+	_getch();
+	clearKeys();
+
+	// 触发该房间的战斗；battle() 胜利后会回写房间解锁状态。
+	battleSystem.battle(num, rooms);
+
+	// 章节结尾的剧情。
+	printRhythm(chapterTag + "3.txt", true, playerName_, 20);
+
+	setColor(cGreen);
+	std::cout << "\n\n\t\t「" << roomDisplayName(num) << "」已通关！\n";
+	if (num < 6)
+	{
+		setColor(cCyan);
+		std::cout << "\t\t已解锁下一章主线房间。\n";
+	}
+	setColor(cWhite);
+}
+
+std::string roomDisplayName(int num)
+{
+	static const char* names[6] =
+	{
+		"废土入口",
+		"黑市街区",
+		"工业工厂",
+		"实验区域",
+		"企业核心区",
+		"NEON 核心"
+	};
+	if (num >= 1 && num <= 6)
+		return names[num - 1];
+	return "未知区域";
 }
 
 void Game::loadingOldGame()
@@ -341,21 +498,133 @@ void Game::loadingOldGame()
 
 void Game::chooseRoom()
 {
-	// 选关界面，关卡还没做，先放个占位说明
-	while (true)
-	{
-		clearScreen();
-		printTopLine();
-		printCentered("选 关 界 面", cCyan);
-		setColor(cGray);
-		std::cout << "\n关卡还没做完，这里先空着。\n";
-		std::cout << "\n按 [0] 或 [Esc] 返回主菜单\n";
-		setColor(cWhite);
-		printBottomLine();
+	// 进入网格地图自由探索：W/A/S/D 移动、Q 退出返回菜单。
+	mapMove(rooms);
+	clearKeys();
+}
 
-		int key = _getch();
-		if (key == '0' || key == 27)	// 0 或 Esc 才退出
-			return;
-		// 按别的键就停在这一页
-	}
+void Game::enterNowRoom(int roomNum)
+{
+	// 按房间类型分发：目前统一走进战斗，胜利后回写解锁状态。
+	battleSystem.battle(roomNum, rooms);
+}
+
+void Game::victory()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("GAME CLEAR  通关成功", cGreen);
+	std::cout << "\n";
+	setColor(cGreen);
+	std::cout << "\n\t\t你击败了失控的 NEON，天穹城恢复了平静。\n";
+	setColor(cYellow);
+	std::cout << "\n\t\t感谢游玩《霓虹回响 · 智械危机》！\n";
+	setColor(cWhite);
+	printBottomLine();
+
+	clearKeys();
+	std::cout << "\n按任意键返回主菜单...\n";
+	_getch();
+	clearKeys();
+	clearScreen();
+}
+
+void Game::defeat()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("GAME OVER  游戏结束", cRed);
+	std::cout << "\n";
+	setColor(cRed);
+	std::cout << "\n\t\t你已阵亡，任务失败...\n";
+	setColor(cWhite);
+	printBottomLine();
+
+	clearKeys();
+	std::cout << "\n按任意键返回主菜单...\n";
+	_getch();
+	clearKeys();
+	clearScreen();
+}
+
+void Game::showShop()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("商 店", cCyan);
+	setColor(cGray);
+	std::cout << "\n(商店功能开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	_getch();
+}
+
+void Game::showUpgrade()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("强 化", cCyan);
+	setColor(cGray);
+	std::cout << "\n(强化功能开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	_getch();
+}
+
+void Game::showBag()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("背 包", cCyan);
+	setColor(cGray);
+	std::cout << "\n(背包功能开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	clearKeys();
+	_getch();
+	clearKeys();
+}
+
+void Game::showPlayerState()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("玩 家 状 态", cCyan);
+	setColor(cYellow);
+	std::cout << "\n\t\t名字：" << playerName_ << "\n";
+	setColor(cGray);
+	std::cout << "\n(完整属性面板开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	clearKeys();
+	_getch();
+	clearKeys();
+}
+
+void Game::saveGame()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("保 存 游 戏", cCyan);
+	setColor(cGray);
+	std::cout << "\n(存档功能开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	clearKeys();
+	_getch();
+	clearKeys();
+}
+
+void Game::loadGame()
+{
+	clearScreen();
+	printTopLine();
+	printCentered("读 取 游 戏", cCyan);
+	setColor(cGray);
+	std::cout << "\n(读档功能开发中)\n";
+	setColor(cWhite);
+	printBottomLine();
+	clearKeys();
+	_getch();
+	clearKeys();
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include "Enemy.h"
 #include "Player.h"
@@ -15,7 +16,7 @@ public:
 	void mainMenu();				// 游戏主菜单（开始新游戏、加载旧游戏、退出游戏）
 	void startNewGame();			// 开始新游戏
 	void loadingOldGame();			// 加载旧游戏
-	void chooseRoom();				// 选关进入
+	void chooseRoom();				// 选关进入（网格地图自由探索）
 	void enterNowRoom(int roomNum);	// 进入当前关卡
 	void victory();					// 胜利结局
 	void defeat();					// 失败结局
@@ -26,6 +27,13 @@ public:
 	void saveGame();				// 保存游戏
 	void loadGame();				// 读取游戏
 private:
+	// 主线剧情：从第 1 章一路推进到 Boss 战。
+	void playMainStory();
+	// 单个章节：播放章节前后剧情，并触发对应房间的战斗。
+	void chapter(int num);
+	// 章节结束后给玩家选择的“游戏内菜单”。
+	void showInGameMenu();
+	std::string playerName_;		// 本局玩家名，用于替换剧情中的 {{name}}
 	Player player;
 	std::vector<Room> rooms;
 	BattleSystem battleSystem;
