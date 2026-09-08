@@ -56,22 +56,21 @@ size_t utf8CharLen(unsigned char lead)
 }
 
 #ifdef _WIN32
-// Windows：非阻塞地检查空格键是否被按下。按过空格返回 true，其它键忽略。
-bool spaceKeyPressed()
+// Windows：非阻塞地检查是否有任意按键。有键被按下就返回 true（跳过本段剧情）。
+bool anyKeyPressed()
 {
     if (_kbhit())
     {
-        int ch = _getch();
-        if (ch == ' ')
-        {
-            return true;
-        }
+        // 方向键会先返回 0/224 再返回扫描码，这里任意键都直接算“按下”。
+        _getch();
+        return true;
     }
     return false;
 }
 #else
-// Linux/macOS：把终端切到非阻塞原始模式再读一次，尽量避免干扰正常输入。
-bool spaceKeyPressed()
+// Linux/macOS：把终端切到非阻塞原始模式读一次。
+// 只要读到一个字符（非 EOF）就返回 true（跳过本段剧情）。
+bool anyKeyPressed()
 {
     struct termios oldt;
     struct termios newt;
@@ -88,15 +87,7 @@ bool spaceKeyPressed()
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     fcntl(STDIN_FILENO, F_SETFL, oldFlags);
 
-    if (ch == ' ')
-    {
-        return true;
-    }
-    if (ch != EOF)
-    {
-        ungetc(ch, stdin);
-    }
-    return false;
+    return ch != EOF;
 }
 #endif
 } // namespace
@@ -128,11 +119,11 @@ void printRhythm(const std::string& input, bool isFile, const std::string& playe
         content = replaceAll(content, "{{name}}", playerName);
     }
 
-    // 按完整字符播放。按下空格后进入跳过模式，一次输出完剩余内容。
+    // 按完整字符播放。玩家按任意键后进入跳过模式，一次输出完剩余内容。
     bool skip = false;
     for (size_t i = 0; i < content.size();)
     {
-        if (!skip && spaceKeyPressed())
+        if (!skip && anyKeyPressed())
         {
             skip = true;
         }
