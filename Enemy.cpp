@@ -1,0 +1,42 @@
+#include<iostream>
+#include<string>
+#include"Enemy.h"
+#include<vector>
+
+
+Enemy::Enemy(std::string name, int hp, int mhp, int atk, int expreward, int goldreward, bool isSkillHave)
+	: BattleSystem(hp, mhp, atk, 999, 999), name(name),Expreward(expreward),Goldreward(goldreward), isSkillHave(isSkillHave) { }
+
+int Enemy::getExpReward() const
+{
+	return Expreward;
+}
+
+int Enemy::getGoldReward() const
+{
+	return Goldreward;
+}
+
+std::vector<Enemy> Enemy::EnemyList = 
+//// 敌人     | HP  | ATK | EXP | GOLD |
+//| ------ | -- - : | -- - : | -- - : | ---- : |
+//| 废土鼠 | 30 | 8 | 15 | 20   |
+//| 街头猎犬 | 45 | 11 | 20 | 30   |
+//| 改造人 | 65 | 15 | 35 | 50   |
+//| 黑客佣兵 | 75 | 17 | 50 | 90   |
+//| 攻击无人机 | 55 | 18 | 40 | 60   |
+//| 重装保镖 | 100 | 20 | 60 | 80   |
+//| 企业猎杀者 | 130 | 25 | 100 | 150  |
+//| NEON - X | 300 | 30 | 500 | 500 |
+{
+	Enemy("废土鼠", 30, 30, 8, 15, 20, false),
+	Enemy("街头猎犬", 45, 45, 11, 20, 30, false),
+	Enemy("改造人", 65, 65, 15, 35, 50, true),
+	Enemy("黑客佣兵", 75, 75, 17, 50, 90, true),
+	Enemy("攻击无人机", 55, 55, 18, 40, 60, false),
+	Enemy("重装保镖", 100, 100, 20, 60, 80, true),
+	Enemy("企业猎杀者", 130, 130, 25, 100, 150, true),
+	Enemy("NEON - X", 300, 300, 30, 500, 500, true)
+};
+
+

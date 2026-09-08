@@ -1,0 +1,15 @@
+﻿  battleSystem.cpp
+  battleSystem.h
+  Enemy.cpp
+  Game.cpp
+  item.cpp
+  main.cpp
+  Player.cpp
+C:\Users\35430\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\main.cpp(6,7): error C2039: "start": 不是 "Game" 的成员
+      C:\Users\35430\Desktop\cppPractice\MUD-Game-Of-Cpp-practice\Game.h(3,7):
+      参见“Game”的声明
+  
+  Room.cpp
+  saveManager.cpp
+  skill.cpp
+  正在生成代码...
