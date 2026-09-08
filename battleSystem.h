@@ -1,11 +1,66 @@
 #pragma once
-#include <vector>
-#include "Room.h"
+#include "skill.h"
 
+// 返回 [min, max] 闭区间的随机整数。
+int getRandomInt(int min, int max);
+
+// BattleSystem 是战斗属性的载体，也是 Player / Enemy 的公共基类。
+// 它持有血量、攻击、能量与各种 debuff 状态，并提供一套回合制战斗流程。
+// 战斗的具体参与者通过继承获得这些属性和接口，battle() 在内部
+// 用 dynamic_cast 区分我方（Player）与敌方（Enemy）。
 class BattleSystem
 {
+protected:
+	int b_Hp;
+	int b_MHp;
+	int b_atk;
+	int b_Energy;   //当前能量
+	int b_Menergy;  //能量上限
+	// debuff 状态
+	bool m_poisoned = false;
+	int m_poisonTurn = 0;
+	bool m_shocked = false;
+	int m_shockTurn = 0;
+	// 防御标记：下一次受伤伤害减半
+	bool m_defending = false;
 public:
-    // roomNum：记录这是第几个房间的主线战斗（1~6 对应 MAIN_1~MAIN_6）。
-    // 传入共享的房间进度 rooms，战斗胜利返回 1 并同步标记/解锁对应房间。
-    int battle(int roomNum, std::vector<Room>& rooms);
+	BattleSystem(int Hp, int MHp, int atk, int Energy, int Menergy);
+	// 获取实时属性
+	int getHp() const;
+	int getMHp() const;
+	int getAtk() const;
+	int getEnergy() const;
+	int getMEnergy() const;
+
+	// 回合制战斗主流程。player/enemy 需分别为 Player / Enemy 的实例。
+	// 玩家胜利返回 true，玩家失败返回 false。
+	bool battle(BattleSystem& player, BattleSystem& enemy);
+
+	// 技能攻击
+	void useSkill(Skill& skill, BattleSystem* caster, BattleSystem* target);
+	// 受到伤害
+	void takedamage(int atk);
+	// 回血（不超过上限）
+	void heal(int val);
+	// 判断是否结束战斗（HP<=0）
+	bool isBattleOver() const;
+
+	// ==== Debuff 接口 ====
+	void applyPoison(int turn);   //施加中毒
+	void applyShock(int turn);    //施加电击
+	void applyDefend();           //开启防御
+
+	// 回合开始执行状态结算（中毒扣血等）
+	void processStatusStartTurn();
+
+	// 计算【输出】伤害时调用：电击减伤逻辑，返回修正后伤害
+	int calcDamageOutput(int rawDmg);
+
+	// 受到伤害前调用：处理防御减伤
+	int calcDamageReceive(int rawDmg);
+
+	// 清除全部战斗状态
+	void clearAllStatus();
+
+	virtual ~BattleSystem() = default;
 };

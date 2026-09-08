@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <chrono>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <thread>
 #include <vector>
@@ -43,6 +44,14 @@ void clearKeys()
 {
 	while (_kbhit())
 		_getch();
+}
+
+// 战斗内部用 std::cin 读数字，结束后把 cin 里残留的换行丢弃，
+// 避免影响后面 _getch() 的判断。
+void clearCin()
+{
+	std::cin.clear();
+	std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
 // 控制台现在有多宽，画边框和居中要用
@@ -341,6 +350,12 @@ void Game::startNewGame()
 	std::string name;
 	std::cin >> name;
 	playerName_ = name;
+
+	// 重置为一个全新玩家：满血满能量，属性点清零，并写入玩家名。
+	player = Player();
+	player.setPlayerName(playerName_);
+	player.restoreToFull();
+
 	clearKeys();
 	clearScreen();
 
@@ -397,12 +412,17 @@ void Game::showInGameMenu()
 }
 
 // 主线流程：从第 1 章一路打到第 6 章 Boss。
+// 主线流程：从第 1 章一路打到第 6 章 Boss。
+// 中途阵亡会立刻结束这一局，回到主菜单。
 void Game::playMainStory()
 {
-	// 与 cxz-task 一致：六个主线房间按顺序推进，一章一仗。
 	for (int n = 1; n <= 6; ++n)
 	{
-		chapter(n);
+		if (!chapter(n))
+		{
+			defeat();
+			return;
+		}
 
 		// 每个房间打通后，给玩家一个打开菜单的机会。
 		char choice = 0;
@@ -427,8 +447,27 @@ void Game::playMainStory()
 	victory();
 }
 
-// 单个章节：播一章开头的剧情 → 触发对应房间的战斗 → 播一章结尾的剧情。
-void Game::chapter(int num)
+// 按章节挑选一只敌人（副本），敌人数据表见 Enemy::EnemyList。
+static Enemy enemyForChapter(int num)
+{
+	// 前五章用递增难度的普通敌人，第六章是 Boss NEON-X。
+	int index = 0;
+	switch (num)
+	{
+	case 1: index = 0; break;  // 废土鼠
+	case 2: index = 1; break;  // 街头猎犬
+	case 3: index = 2; break;  // 改造人
+	case 4: index = 3; break;  // 黑客佣兵
+	case 5: index = 5; break;  // 重装保镖
+	case 6: index = 7; break;  // NEON - X（Boss）
+	default: index = 0; break;
+	}
+	return Enemy::EnemyList[index];
+}
+
+// 单个章节：播一章开头的剧情 → 触发对应房间的真实战斗 → 播一章结尾的剧情。
+// 返回 true 表示本章打通；玩家阵亡返回 false。
+bool Game::chapter(int num)
 {
 	clearScreen();
 	printTopLine();
@@ -443,13 +482,38 @@ void Game::chapter(int num)
 	printRhythm(chapterTag + "1.txt", true, playerName_, 20);
 	printRhythm(chapterTag + "2.txt", true, playerName_, 20);
 
+	// 每章视作一次“回到安全区”，开打前回满血与能量，保证体验连贯。
+	player.restoreToFull();
+
 	clearKeys();
 	std::cout << "\n\n按任意键进入战斗...\n";
 	_getch();
 	clearKeys();
 
-	// 触发该房间的战斗；battle() 胜利后会回写房间解锁状态。
-	battleSystem.battle(num, rooms);
+	// 构造本章敌人并进入真实回合制战斗。
+	Enemy foe = enemyForChapter(num);
+	setColor(cRed);
+	std::cout << "\n\t你遭遇了 " << foe.getName() << " ！\n";
+	setColor(cWhite);
+
+	bool won = player.battle(player, foe);
+
+	// 战斗内部用 std::cin，结束后清掉残留输入，避免干扰后续 _getch。
+	clearCin();
+
+	// 战斗结束后给一小段停顿，避免结果一闪而过。
+	clearKeys();
+	std::cout << "\n按任意键继续...\n";
+	_getch();
+	clearKeys();
+
+	if (!won)
+	{
+		return false;
+	}
+
+	// 胜利：回写房间解锁状态。
+	unlockRoomAfterChapter(num);
 
 	// 章节结尾的剧情。
 	printRhythm(chapterTag + "3.txt", true, playerName_, 20);
@@ -462,6 +526,25 @@ void Game::chapter(int num)
 		std::cout << "\t\t已解锁下一章主线房间。\n";
 	}
 	setColor(cWhite);
+	return true;
+}
+
+void Game::unlockRoomAfterChapter(int num)
+{
+	// 把对应的主线房标记为 CLEARED，并解锁以它为前置的房间。
+	Room* cur = findRoomById(rooms, static_cast<RoomId>(num));
+	if (cur != nullptr && cur->getState() == RoomState::AVAILABLE && !cur->isRepeatable())
+	{
+		cur->markCleared();
+		for (std::vector<Room>::iterator it = rooms.begin(); it != rooms.end(); ++it)
+		{
+			if (it->getState() == RoomState::LOCKED &&
+				it->getUnlockPrerequisite() == cur->getId())
+			{
+				it->unlock();
+			}
+		}
+	}
 }
 
 std::string roomDisplayName(int num)
@@ -505,8 +588,18 @@ void Game::chooseRoom()
 
 void Game::enterNowRoom(int roomNum)
 {
-	// 按房间类型分发：目前统一走进战斗，胜利后回写解锁状态。
-	battleSystem.battle(roomNum, rooms);
+	// 从地图进入一间战斗房时，按房间号挑选敌人开战。
+	// 主线房 1~6 对应章节敌人，其余房间退回第一档敌人。
+	Enemy foe = enemyForChapter(roomNum);
+	bool won = player.battle(player, foe);
+	if (won)
+	{
+		unlockRoomAfterChapter(roomNum);
+	}
+	else
+	{
+		defeat();
+	}
 }
 
 void Game::victory()
@@ -590,13 +683,24 @@ void Game::showPlayerState()
 	clearScreen();
 	printTopLine();
 	printCentered("玩 家 状 态", cCyan);
+
 	setColor(cYellow);
-	std::cout << "\n\t\t名字：" << playerName_ << "\n";
-	setColor(cGray);
-	std::cout << "\n(完整属性面板开发中)\n";
+	std::cout << "\n\t\t名字：" << player.getPlayerName() << "\n";
+	setColor(cWhite);
+	std::cout << "\t\t等级：" << player.getLevel() << "\n";
+	std::cout << "\t\t生命：" << player.getHp() << " / " << player.getMHp() << "\n";
+	std::cout << "\t\t攻击：" << player.getAtk() << "\n";
+	std::cout << "\t\t能量：" << player.getEnergy() << " / " << player.getMEnergy() << "\n";
+	setColor(cCyan);
+	std::cout << "\t\t经验：" << player.getExp() << "\n";
+	std::cout << "\t\t金币：" << player.getGold() << "\n";
+	setColor(cGreen);
+	std::cout << "\t\t可用属性点：" << player.getAtp() << "\n";
 	setColor(cWhite);
 	printBottomLine();
+
 	clearKeys();
+	std::cout << "\n按任意键返回...\n";
 	_getch();
 	clearKeys();
 }

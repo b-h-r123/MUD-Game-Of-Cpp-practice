@@ -30,13 +30,15 @@ private:
 	// 主线剧情：从第 1 章一路推进到 Boss 战。
 	void playMainStory();
 	// 单个章节：播放章节前后剧情，并触发对应房间的战斗。
-	void chapter(int num);
+	// 返回 true 表示本章打通，false 表示玩家阵亡。
+	bool chapter(int num);
 	// 章节结束后给玩家选择的“游戏内菜单”。
 	void showInGameMenu();
+	// 战斗胜利后的结算：按章节解锁对应的主线房间。
+	void unlockRoomAfterChapter(int num);
 	std::string playerName_;		// 本局玩家名，用于替换剧情中的 {{name}}
 	Player player;
 	std::vector<Room> rooms;
-	BattleSystem battleSystem;
 	SaveManager saveManager;
 	int roomNum = 1;
 	bool gaming = true;
