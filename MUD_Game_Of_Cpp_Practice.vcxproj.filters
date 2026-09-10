@@ -48,6 +48,15 @@
     <ClCompile Include="plot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Upgrade.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -78,6 +87,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="plot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Upgrade.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

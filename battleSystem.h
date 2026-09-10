@@ -25,12 +25,12 @@ protected:
 	bool m_defending = false;
 public:
 	BattleSystem(int Hp, int MHp, int atk, int Energy, int Menergy);
-	// 获取实时属性
-	int getHp() const;
-	int getMHp() const;
-	int getAtk() const;
-	int getEnergy() const;
-	int getMEnergy() const;
+	// 获取实时属性。虚函数：Player 会叠加装备加成后返回有效值。
+	virtual int getHp() const;
+	virtual int getMHp() const;
+	virtual int getAtk() const;
+	virtual int getEnergy() const;
+	virtual int getMEnergy() const;
 
 	// 回合制战斗主流程。player/enemy 需分别为 Player / Enemy 的实例。
 	// 玩家胜利返回 true，玩家失败返回 false。
@@ -54,10 +54,10 @@ public:
 	void processStatusStartTurn();
 
 	// 计算【输出】伤害时调用：电击减伤逻辑，返回修正后伤害
-	int calcDamageOutput(int rawDmg);
+	virtual int calcDamageOutput(int rawDmg);
 
-	// 受到伤害前调用：处理防御减伤
-	int calcDamageReceive(int rawDmg);
+	// 受到伤害前调用：处理防御减伤。虚函数供 Player 叠加装备减伤。
+	virtual int calcDamageReceive(int rawDmg);
 
 	// 清除全部战斗状态
 	void clearAllStatus();

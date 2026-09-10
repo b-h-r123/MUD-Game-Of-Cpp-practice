@@ -36,7 +36,7 @@ void BattleSystem::takedamage(int atk)
 void BattleSystem::heal(int val)
 {
 	b_Hp += val;
-	if (b_Hp > b_MHp) b_Hp = b_MHp;
+	if (b_Hp > getMHp()) b_Hp = getMHp();
 }
 
 void BattleSystem::useSkill(Skill& skill, BattleSystem* caster, BattleSystem* target)
@@ -54,9 +54,29 @@ void BattleSystem::useSkill(Skill& skill, BattleSystem* caster, BattleSystem* ta
 			return;
 		}
 	}
-	int rawDamage = caster->b_atk * skill.damageRate;
-	int outDmg = caster->calcDamageOutput(rawDamage);	//释放者电击修正
-	int finalDmg = target->calcDamageReceive(outDmg);	//受击方防御修正
+
+	// 技能伤害基于有效攻击（含装备加成）。
+	int rawDamage = caster->getAtk() * skill.damageRate;
+	int outDmg = caster->calcDamageOutput(rawDamage);
+
+	// 玩家装备的“技能增伤 / 斩杀”被动在此结算。
+	Player* casterPlayer = dynamic_cast<Player*>(caster);
+	if (casterPlayer != 0)
+	{
+		const PassiveEffect* skillBonus = casterPlayer->findPassive(PassiveType::SKILL_DAMAGE_BONUS);
+		if (skillBonus != 0)
+		{
+			outDmg = outDmg * (100 + skillBonus->value) / 100;
+		}
+		const PassiveEffect* execute = casterPlayer->findPassive(PassiveType::EXECUTE_DAMAGE);
+		if (execute != 0 && execute->thresholdPercent > 0 &&
+			target->getHp() * 100 <= target->getMHp() * execute->thresholdPercent)
+		{
+			outDmg = outDmg * (100 + execute->value) / 100;
+		}
+	}
+
+	int finalDmg = target->calcDamageReceive(outDmg);
 	target->takedamage(finalDmg);
 	std::cout << "\n【" << skill.name << "】造成" << finalDmg << "伤害！\n";
 
@@ -177,14 +197,16 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		return false;
 	}
 
-	// 开战前清掉上一场残留状态，确保每场战斗干净开局。
+	// 每场战斗开始：清状态、重置“每场一次”被动与临时效果。
 	player->clearAllStatus();
 	enemy->clearAllStatus();
+	player->beginBattle();
 
 	int choose = 0;
 	while (true)
 	{
 		// ===== 玩家回合 =====
+		player->processTurnStartEffects();
 		player->processStatusStartTurn();
 		if (player->isBattleOver())
 		{
@@ -194,7 +216,7 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		std::cout << "\n你的血量：" << player->getHp() << "/" << player->getMHp()
 			<< "  能量：" << player->getEnergy() << "/" << player->getMEnergy() << "\n";
 		std::cout << "敌人血量：" << enemy->getHp() << "/" << enemy->getMHp() << "\n\n";
-		std::cout << "1.普通攻击  2.使用技能  3.防御  ";
+		std::cout << "1.普通攻击  2.使用技能  3.使用道具  4.防御  ";
 		std::cin >> choose;
 		if (std::cin.fail())
 		{
@@ -202,15 +224,32 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			std::cin.ignore(1024, '\n');
 			choose = 0;
 		}
+
 		switch (choose)
 		{
 		case 1:
 		{
 			int raw = player->getAtk();
 			int out = player->calcDamageOutput(raw);
+
+			const PassiveEffect* execute = player->findPassive(PassiveType::EXECUTE_DAMAGE);
+			if (execute != 0 && execute->thresholdPercent > 0 &&
+				enemy->getHp() * 100 <= enemy->getMHp() * execute->thresholdPercent)
+			{
+				out = out * (100 + execute->value) / 100;
+			}
+
 			int finalDmg = enemy->calcDamageReceive(out);
 			enemy->takedamage(finalDmg);
 			std::cout << "普通攻击造成" << finalDmg << "伤害\n";
+
+			// 电弧链刃：命中后追加一次伤害。
+			const PassiveEffect* followUp = player->findPassive(PassiveType::FOLLOW_UP_DAMAGE);
+			if (followUp != 0 && !enemy->isBattleOver())
+			{
+				enemy->takedamage(followUp->value);
+				std::cout << "[电弧链刃] 追加 " << followUp->value << " 点伤害！\n";
+			}
 			break;
 		}
 		case 2:
@@ -231,7 +270,17 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			}
 			if (skillNo >= 1 && skillNo <= static_cast<int>(PlayerSkillList.size()))
 			{
-				useSkill(PlayerSkillList[skillNo - 1], &p, &e);
+				// 拷贝一份，避免修改全局技能表；同时应用“首次技能减耗”被动。
+				Skill chosen = PlayerSkillList[skillNo - 1];
+				const PassiveEffect* costReduction =
+					player->findPassive(PassiveType::FIRST_SKILL_COST_REDUCTION);
+				if (costReduction != 0 &&
+					player->consumeOncePassive(PassiveType::FIRST_SKILL_COST_REDUCTION))
+				{
+					chosen.energyCost = std::max(0, chosen.energyCost - costReduction->value);
+					std::cout << "[零点电容] 本次技能能量消耗降低 " << costReduction->value << "。\n";
+				}
+				useSkill(chosen, player, enemy);
 			}
 			else
 			{
@@ -240,6 +289,60 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			break;
 		}
 		case 3:
+		{
+			// 列出四个固定消耗品槽里当前可用的道具。
+			const std::array<ConsumableSlot, 4>& consumables = player->getItemSlots().getConsumableSlots();
+			std::cout << "选择要使用的道具：\n";
+			int index = 1;
+			int slotOf[4] = {-1, -1, -1, -1};
+			for (size_t i = 0; i < consumables.size(); ++i)
+			{
+				if (consumables[i].getCount() > 0)
+				{
+					const Item* def = player->getCatalog().findById(consumables[i].getItemId());
+					if (def != 0)
+					{
+						slotOf[index - 1] = static_cast<int>(i);
+						std::cout << "  [" << index << "] " << def->getName()
+							<< " x" << consumables[i].getCount() << "\n";
+						++index;
+					}
+				}
+			}
+			if (index == 1)
+			{
+				std::cout << "  没有可用的道具。\n";
+				break;
+			}
+			int itemNo = 0;
+			std::cin >> itemNo;
+			if (std::cin.fail())
+			{
+				std::cin.clear();
+				std::cin.ignore(1024, '\n');
+				itemNo = 0;
+			}
+			if (itemNo >= 1 && itemNo < index)
+			{
+				const int realSlot = slotOf[itemNo - 1];
+				const ItemId usedId = consumables[realSlot].getItemId();
+				if (player->useConsumable(usedId))
+				{
+					const Item* def = player->getCatalog().findById(usedId);
+					std::cout << "使用了 " << (def != 0 ? def->getName() : "道具") << "。\n";
+				}
+				else
+				{
+					std::cout << "道具使用失败。\n";
+				}
+			}
+			else
+			{
+				std::cout << "无效的道具选择，本回合跳过。\n";
+			}
+			break;
+		}
+		case 4:
 			std::cout << "你进入防御状态，下一次受伤伤害减半。\n";
 			player->applyDefend();
 			break;
@@ -268,26 +371,60 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		}
 
 		int enemyMove = getRandomInt(1, 3);
+		int incomingDamage = 0;
 		switch (enemyMove)
 		{
 		case 1:
 		{
 			int raw = enemy->getAtk();
 			int out = enemy->calcDamageOutput(raw);
-			int finalDmg = player->calcDamageReceive(out);
-			player->takedamage(finalDmg);
-			std::cout << "敌人普通攻击造成" << finalDmg << "伤害\n";
+			incomingDamage = player->calcDamageReceive(out);
 			break;
 		}
 		case 2:
-			useSkill(EnemySkillList[getRandomInt(0, static_cast<int>(EnemySkillList.size()) - 1)], &e, &p);
+		{
+			// 敌人技能：直接走 useSkill，它内部已处理伤害与 debuff。
+			useSkill(EnemySkillList[getRandomInt(0, static_cast<int>(EnemySkillList.size()) - 1)], enemy, player);
+			incomingDamage = 0;
 			break;
+		}
 		case 3:
 			std::cout << "敌人进入防御状态\n";
 			enemy->applyDefend();
+			incomingDamage = 0;
 			break;
 		default:
 			break;
+		}
+
+		if (incomingDamage > 0)
+		{
+			// 神盾装甲：每场战斗首次致命伤害时保留 1 点生命。
+			const PassiveEffect* guard = player->findPassive(PassiveType::LETHAL_GUARD);
+			if (guard != 0 && player->getHp() - incomingDamage <= 0 &&
+				player->consumeOncePassive(PassiveType::LETHAL_GUARD))
+			{
+				const int lethal = player->getHp() > 0 ? player->getHp() - 1 : 0;
+				player->takedamage(lethal);
+				std::cout << "[神盾装甲] 致命伤害被抵挡，保留 1 点生命！\n";
+			}
+			else
+			{
+				player->takedamage(incomingDamage);
+				std::cout << "敌人普通攻击造成" << incomingDamage << "伤害\n";
+			}
+
+			// 镜面反射盾：反弹部分最终承受伤害。
+			const PassiveEffect* reflect = player->findPassive(PassiveType::REFLECT_DAMAGE);
+			if (reflect != 0 && incomingDamage > 0 && !enemy->isBattleOver())
+			{
+				const int reflected = incomingDamage * reflect->value / 100;
+				if (reflected > 0)
+				{
+					enemy->takedamage(reflected);
+					std::cout << "[镜面反射盾] 反弹 " << reflected << " 点伤害！\n";
+				}
+			}
 		}
 
 		// 玩家被击杀 → 失败

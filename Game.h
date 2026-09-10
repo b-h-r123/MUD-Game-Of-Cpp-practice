@@ -21,6 +21,7 @@ public:
 	void victory();					// 胜利结局
 	void defeat();					// 失败结局
 	void showShop();				// 商店界面
+	void showBlackMarket();			// 黑市界面
 	void showUpgrade();				// 强化界面
 	void showBag();					// 背包界面
 	void showPlayerState();			// 玩家状态界面
@@ -36,6 +37,8 @@ private:
 	void showInGameMenu();
 	// 战斗胜利后的结算：按章节解锁对应的主线房间。
 	void unlockRoomAfterChapter(int num);
+	// 运行一次商店（blackMarket=false 普通商店，true 黑市）。
+	void runShop(bool blackMarket);
 	std::string playerName_;		// 本局玩家名，用于替换剧情中的 {{name}}
 	Player player;
 	std::vector<Room> rooms;

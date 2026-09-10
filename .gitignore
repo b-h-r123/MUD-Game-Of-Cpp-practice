@@ -7,3 +7,5 @@ riderModule.iml
 .claude/
 MUD_Game.41c95b06/
 x64/
+build_tests/
+savegame.txt

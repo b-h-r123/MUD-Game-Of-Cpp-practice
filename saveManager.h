@@ -1,30 +1,18 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
 #include <string>
-#include "item.h"
-#include "Player.h"
+#include <vector>
 
+class Player;
+class Room;
+
+// SaveManager 只负责把玩家状态与房间进度写入/读出文本存档，
+// 不参与战斗、商店和输入。存档格式为两行：
+//   第一行：Player::serialize() 的一行文本
+//   第二行：12 个房间状态（0=LOCKED 1=AVAILABLE 2=CLEARED）
 class SaveManager
 {
 public:
-	void saveGame(const std::string& filename, const std::string& data)
-	{
-		std::ofstream outFile(filename);
-		if (outFile.is_open())
-		{
-			outFile << data;
-			outFile.close();
-			std::cout << "游戏已保存到 " << filename << std::endl;
-		}
-		else
-		{
-			std::cerr << "无法打开文件 " << filename << " 进行保存。" << std::endl;
-		}
-	}
-
-private:
-	Player player;
-	Item item;
+	bool save(const std::string& filename, const Player& player, const std::vector<Room>& rooms) const;
+	bool load(const std::string& filename, Player& player, std::vector<Room>& rooms) const;
 };

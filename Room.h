@@ -103,6 +103,9 @@ public:
     // 对 LOCKED、已经 CLEARED、商店或黑市调用时都不会改变状态。
     void markCleared();
 
+    // 直接恢复状态：仅供读取存档使用，正常流程不要调用。
+    void setState(RoomState state);
+
 private:
     // 固定配置：创建默认地图后不应在运行期间改变。
     RoomId id_;                       // 房间身份，默认地图中必须唯一。

@@ -114,6 +114,12 @@ void Room::markCleared()
     }
 }
 
+void Room::setState(RoomState state)
+{
+    // 仅供读取存档恢复进度使用，绕过状态机校验。
+    state_ = state;
+}
+
 // ============================= 默认地图数据 =============================
 
 std::vector<Room> createDefaultRooms()
