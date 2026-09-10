@@ -11,6 +11,7 @@
 
 #include "map.h"
 #include "plot.h"
+#include "Shop.h"
 
 // 主线六个房间的显示名，用于通关提示。
 std::string roomDisplayName(int num);
@@ -23,6 +24,9 @@ const int cGreen   = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 const int cGray    = FOREGROUND_INTENSITY;
 const int cBlue    = FOREGROUND_BLUE;
 const int cWhite   = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+
+// 存档文件名（相对于程序工作目录）。
+static const char* SAVE_FILE = "savegame.txt";
 
 void setColor(int color)
 {
@@ -381,7 +385,10 @@ void Game::showInGameMenu()
 		std::cout << "\t\t[1] 进入地图自由探索\n";
 		std::cout << "\t\t[2] 查看玩家状态\n";
 		std::cout << "\t\t[3] 打开背包\n";
-		std::cout << "\t\t[4] 保存游戏\n";
+		std::cout << "\t\t[4] 进入普通商店\n";
+		std::cout << "\t\t[5] 进入黑市\n";
+		std::cout << "\t\t[6] 强化（分配属性点）\n";
+		std::cout << "\t\t[7] 保存游戏\n";
 		std::cout << "\t\t[0] 返回主线\n";
 		setColor(cWhite);
 		printBottomLine();
@@ -401,6 +408,18 @@ void Game::showInGameMenu()
 			showBag();
 		}
 		else if (key == '4')
+		{
+			showShop();
+		}
+		else if (key == '5')
+		{
+			showBlackMarket();
+		}
+		else if (key == '6')
+		{
+			showUpgrade();
+		}
+		else if (key == '7')
 		{
 			saveGame();
 		}
@@ -568,15 +587,30 @@ void Game::loadingOldGame()
 	clearScreen();
 	printTopLine();
 	typeWrite("正在扫描存档目录...\n", cCyan, 25);
-	typeWrite("没有找到可用的存档。\n", cRed, 25);
-	setColor(cGray);
-	std::cout << "\n(读档功能还没做)\n";
-	setColor(cWhite);
-	printBottomLine();
 
-	clearKeys();
-	_getch();			// 任意键回主菜单
-	clearKeys();
+	if (saveManager.load(SAVE_FILE, player, rooms))
+	{
+		playerName_ = player.getPlayerName();
+		setColor(cGreen);
+		std::cout << "\n读档成功，欢迎回来，" << playerName_ << "。\n";
+		setColor(cWhite);
+		printBottomLine();
+		clearKeys();
+		std::cout << "\n按任意键继续...\n";
+		_getch();
+		clearKeys();
+		showInGameMenu();
+	}
+	else
+	{
+		typeWrite("没有找到可用的存档。\n", cRed, 25);
+		setColor(cWhite);
+		printBottomLine();
+		clearKeys();
+		std::cout << "\n按任意键返回主菜单...\n";
+		_getch();
+		clearKeys();
+	}
 }
 
 void Game::chooseRoom()
@@ -642,39 +676,259 @@ void Game::defeat()
 
 void Game::showShop()
 {
-	clearScreen();
-	printTopLine();
-	printCentered("商 店", cCyan);
-	setColor(cGray);
-	std::cout << "\n(商店功能开发中)\n";
-	setColor(cWhite);
-	printBottomLine();
-	_getch();
+	runShop(false);
+}
+
+void Game::showBlackMarket()
+{
+	runShop(true);
+}
+
+void Game::runShop(bool blackMarket)
+{
+	// 门禁：对应的商店房尚未解锁时不允许进入。
+	const RoomId shopRoomId = blackMarket ? RoomId::BLACK_MARKET : RoomId::SHOP;
+	const Room* shopRoom = findRoomById(rooms, shopRoomId);
+	if (shopRoom == nullptr || !shopRoom->canEnter())
+	{
+		clearScreen();
+		printTopLine();
+		printCentered(blackMarket ? "黑市尚未开放。" : "商店尚未开放。", cRed);
+		printBottomLine();
+		clearKeys();
+		_getch();
+		clearKeys();
+		return;
+	}
+
+	const ShopType type = blackMarket ? ShopType::BLACK_MARKET : ShopType::NORMAL;
+	Shop shop(type, player.getCatalog(), ShopConfig());
+	if (!shop.enter())
+	{
+		clearScreen();
+		printTopLine();
+		printCentered("商店暂时无法营业。", cRed);
+		printBottomLine();
+		_getch();
+		return;
+	}
+
+	while (true)
+	{
+		clearScreen();
+		printTopLine();
+		printCentered(blackMarket ? "黑 市" : "普 通 商 店", cMagenta);
+		setColor(cCyan);
+		std::cout << "\n\t\t金币：" << player.getGold() << "\n\n";
+
+		const std::vector<ShopOffer>& offers = shop.getOffers();
+		if (offers.empty())
+		{
+			setColor(cGray);
+			std::cout << "\t\t(货架已空)\n";
+		}
+		else
+		{
+			for (std::size_t i = 0; i < offers.size(); ++i)
+			{
+				const Item* def = player.getCatalog().findById(offers[i].itemId);
+				setColor(cWhite);
+				std::cout << "\t\t[" << (i + 1) << "] "
+					<< (def != 0 ? def->getName() : "未知物品")
+					<< "  " << offers[i].price << " 金";
+				setColor(cGray);
+				std::cout << "  " << (def != 0 ? def->getDescription() : "") << "\n";
+			}
+		}
+
+		setColor(cGray);
+		std::cout << "\n\t\t输入编号购买，[0] 离开：";
+		setColor(cWhite);
+		int key = _getch();
+		if (key == '0' || key == 27)
+		{
+			break;
+		}
+
+		const int index = key - '1';
+		if (index < 0 || index >= static_cast<int>(offers.size()))
+		{
+			continue;
+		}
+
+		const ShopOffer& offer = offers[index];
+		const Item* def = player.getCatalog().findById(offer.itemId);
+		if (def == 0)
+		{
+			continue;
+		}
+
+		if (player.getGold() < offer.price)
+		{
+			setColor(cRed);
+			std::cout << "\n\t\t金币不足，无法购买。\n";
+		}
+		else if (!player.receiveItem(*def))
+		{
+			setColor(cRed);
+			std::cout << "\n\t\t无法携带该物品（装备栏或背包限制）。\n";
+		}
+		else
+		{
+			player.spendGold(offer.price);
+			shop.commitPurchase(index);
+			setColor(cGreen);
+			std::cout << "\n\t\t购买成功：" << def->getName() << "\n";
+		}
+		setColor(cWhite);
+		std::cout << "\t\t按任意键继续...";
+		_getch();
+	}
+	clearKeys();
 }
 
 void Game::showUpgrade()
 {
-	clearScreen();
-	printTopLine();
-	printCentered("强 化", cCyan);
-	setColor(cGray);
-	std::cout << "\n(强化功能开发中)\n";
-	setColor(cWhite);
-	printBottomLine();
-	_getch();
+	while (true)
+	{
+		clearScreen();
+		printTopLine();
+		printCentered("强 化", cCyan);
+
+		setColor(cWhite);
+		std::cout << "\n\t\t等级：" << player.getLevel()
+			<< "    经验：" << player.getExp()
+			<< " / " << player.getRequiredExpForNextLevel() << "\n";
+		std::cout << "\t\t攻击：" << player.getAtk()
+			<< "    最大生命：" << player.getMHp()
+			<< "    最大能量：" << player.getMEnergy() << "\n";
+		setColor(cGreen);
+		std::cout << "\t\t可用属性点：" << player.getAtp() << "\n\n";
+
+		setColor(cGray);
+		std::cout << "\t\t[1] 攻击力 +5\n";
+		std::cout << "\t\t[2] 最大生命 +20\n";
+		std::cout << "\t\t[0] 返回\n";
+		setColor(cWhite);
+		printBottomLine();
+
+		int key = _getch();
+		if (key == '1')
+		{
+			if (player.allocateAttack())
+			{
+				setColor(cGreen);
+				std::cout << "\n\t\t攻击力提升！\n";
+			}
+			else
+			{
+				setColor(cRed);
+				std::cout << "\n\t\t属性点不足。\n";
+			}
+			setColor(cWhite);
+			std::cout << "\t\t按任意键继续...";
+			_getch();
+		}
+		else if (key == '2')
+		{
+			if (player.allocateMaxHp())
+			{
+				setColor(cGreen);
+				std::cout << "\n\t\t最大生命提升！\n";
+			}
+			else
+			{
+				setColor(cRed);
+				std::cout << "\n\t\t属性点不足。\n";
+			}
+			setColor(cWhite);
+			std::cout << "\t\t按任意键继续...";
+			_getch();
+		}
+		else if (key == '0' || key == 27)
+		{
+			break;
+		}
+	}
+	clearKeys();
 }
 
 void Game::showBag()
 {
-	clearScreen();
-	printTopLine();
-	printCentered("背 包", cCyan);
-	setColor(cGray);
-	std::cout << "\n(背包功能开发中)\n";
-	setColor(cWhite);
-	printBottomLine();
-	clearKeys();
-	_getch();
+	while (true)
+	{
+		clearScreen();
+		printTopLine();
+		printCentered("背 包", cCyan);
+
+		const ItemSlots& slots = player.getItemSlots();
+		const std::array<ConsumableSlot, 4>& consumables = slots.getConsumableSlots();
+
+		setColor(cWhite);
+		std::cout << "\n\t\t--- 消耗品 ---\n";
+		for (std::size_t i = 0; i < consumables.size(); ++i)
+		{
+			const Item* def = player.getCatalog().findById(consumables[i].getItemId());
+			std::cout << "\t\t[" << (i + 1) << "] "
+				<< (def != 0 ? def->getName() : "未知")
+				<< "  x" << consumables[i].getCount() << "\n";
+		}
+
+		std::cout << "\n\t\t--- 装备 ---\n";
+		const EquipmentSlot eqSlots[3] = { EquipmentSlot::WEAPON, EquipmentSlot::SHIELD, EquipmentSlot::ACCESSORY };
+		const char* eqNames[3] = { "武器", "护盾", "配饰" };
+		for (int i = 0; i < 3; ++i)
+		{
+			const ItemId id = slots.getEquippedItem(eqSlots[i]);
+			const Item* def = player.getCatalog().findById(id);
+			std::cout << "\t\t" << eqNames[i] << "："
+				<< (def != 0 ? def->getName() : "（空）") << "\n";
+		}
+
+		setColor(cCyan);
+		std::cout << "\n\t\t攻击 " << player.getAtk()
+			<< "   最大生命 " << player.getMHp()
+			<< "   最大能量 " << player.getMEnergy() << "\n";
+
+		setColor(cGray);
+		std::cout << "\n\t\t输入消耗品编号使用，[0] 返回：";
+		setColor(cWhite);
+
+		int key = _getch();
+		if (key == '0' || key == 27)
+		{
+			break;
+		}
+		const int index = key - '1';
+		if (index < 0 || index >= static_cast<int>(consumables.size()))
+		{
+			continue;
+		}
+		const ItemId id = consumables[index].getItemId();
+		const Item* def = player.getCatalog().findById(id);
+		if (def == 0 || consumables[index].getCount() <= 0)
+		{
+			continue;
+		}
+		if (!def->canUseOutsideBattle())
+		{
+			setColor(cRed);
+			std::cout << "\n\t\t该道具只能在战斗中使用。\n";
+		}
+		else if (player.useConsumable(id))
+		{
+			setColor(cGreen);
+			std::cout << "\n\t\t使用了 " << def->getName() << "。\n";
+		}
+		else
+		{
+			setColor(cRed);
+			std::cout << "\n\t\t使用失败。\n";
+		}
+		setColor(cWhite);
+		std::cout << "\t\t按任意键继续...";
+		_getch();
+	}
 	clearKeys();
 }
 
@@ -710,8 +964,16 @@ void Game::saveGame()
 	clearScreen();
 	printTopLine();
 	printCentered("保 存 游 戏", cCyan);
-	setColor(cGray);
-	std::cout << "\n(存档功能开发中)\n";
+	if (saveManager.save(SAVE_FILE, player, rooms))
+	{
+		setColor(cGreen);
+		std::cout << "\n\t\t游戏已保存。\n";
+	}
+	else
+	{
+		setColor(cRed);
+		std::cout << "\n\t\t保存失败。\n";
+	}
 	setColor(cWhite);
 	printBottomLine();
 	clearKeys();
@@ -724,8 +986,17 @@ void Game::loadGame()
 	clearScreen();
 	printTopLine();
 	printCentered("读 取 游 戏", cCyan);
-	setColor(cGray);
-	std::cout << "\n(读档功能开发中)\n";
+	if (saveManager.load(SAVE_FILE, player, rooms))
+	{
+		playerName_ = player.getPlayerName();
+		setColor(cGreen);
+		std::cout << "\n\t\t读档成功。\n";
+	}
+	else
+	{
+		setColor(cRed);
+		std::cout << "\n\t\t没有可用的存档。\n";
+	}
 	setColor(cWhite);
 	printBottomLine();
 	clearKeys();
