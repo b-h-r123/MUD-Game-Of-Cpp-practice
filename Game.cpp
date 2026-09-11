@@ -534,6 +534,13 @@ bool Game::chapter(int num)
 	// 胜利：回写房间解锁状态。
 	unlockRoomAfterChapter(num);
 
+	// 每过一关自动存档一次，避免进度丢失。
+	if (saveManager.save(SAVE_FILE, player, rooms))
+	{
+		setColor(cCyan);
+		std::cout << "\n\t\t(进度已自动保存)\n";
+	}
+
 	// 章节结尾的剧情。
 	printRhythm(chapterTag + "3.txt", true, playerName_, 20);
 
