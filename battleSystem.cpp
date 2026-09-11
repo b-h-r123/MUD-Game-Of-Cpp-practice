@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include <cstdlib>
+#include <conio.h>
 
 #define NOMINMAX
 #include <windows.h>
@@ -22,6 +23,15 @@ std::mt19937 rng(std::random_device{}());
 void clearScreen()
 {
 	system("cls");
+}
+
+// 战斗结算后：先停留让玩家看清胜负提示，按键后再清屏。
+void pauseThenClear()
+{
+	std::cout << "\n  按任意键继续...";
+	std::cout.flush();
+	_getch();
+	clearScreen();
 }
 
 void setTextColor(int color)
@@ -435,6 +445,7 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			resetTextColor();
 			player->addExp(enemy->getExpReward());
 			player->addGold(enemy->getGoldReward());
+			pauseThenClear();
 			return true;
 		}
 
@@ -447,6 +458,7 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			resetTextColor();
 			player->addExp(enemy->getExpReward());
 			player->addGold(enemy->getGoldReward());
+			pauseThenClear();
 			return true;
 		}
 
@@ -513,6 +525,7 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			setTextColor(0x0C);
 			std::cout << "\n  你输了！\n";
 			resetTextColor();
+			pauseThenClear();
 			return false;
 		}
 	}

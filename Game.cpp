@@ -116,42 +116,30 @@ void printBottomLine()
 	setColor(cWhite);
 }
 
-// NEON ECHO 的 logo，就是几行块字，换着颜色打出来
-struct LogoLine
-{
-	std::string text;
-	int color;
-};
-
-std::vector<LogoLine> neonLogo()
-{
-	return {
-		{ "██      █  ██████  ██████  ██      █", cCyan },
-		{ "███    █  ██          █        █  ███    █", cCyan },
-		{ "█  ██  █  █████    █        █  █  ██  █", cMagenta },
-		{ "█    ███  ██          █        █  █    ███", cMagenta },
-		{ "█      ██  ██████  ██████  █      ██", cYellow },
-		{ "                                             ", cWhite },
-		{ "███████╗ ██████╗██╗  ██╗ ██████╗        ", cCyan },
-		{ "██╔════╝██╔════╝██║  ██║██╔═══██╗       ", cCyan },
-		{ "█████╗  ██║     ███████║██║   ██║       ", cMagenta },
-		{ "██╔══╝  ██║     ██╔══██║██║   ██║       ", cMagenta },
-		{ "███████╗╚██████╗██║  ██║╚██████╔╝       ", cYellow },
-		{ "╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝        ", cYellow },
-	};
-}
-
+// 标题框：朴素的双线边框 + 游戏名，不追求花哨的块字艺术。
+// 框宽固定 44 列，内容手工居中，控制台宽度不够时靠左。
 void printLogo()
 {
 	int width = consoleWidth();
-	int left = (width - 44) / 2;	// 44 是 logo 一行大概的宽度
+	int left = (width - 44) / 2;
 	if (left < 0) left = 0;
+	const std::string pad(left, ' ');
 
-	for (const LogoLine& line : neonLogo())
-	{
-		setColor(line.color);
-		std::cout << std::string(left, ' ') << line.text << "\n";
-	}
+	setColor(cCyan);
+	std::cout << pad << "+------------------------------------------+\n";
+	std::cout << pad << "|                                          |\n";
+	std::cout << pad << "|";
+	setColor(cMagenta);
+	std::cout << "                 霓虹回响";
+	setColor(cCyan);
+	std::cout << "                 |\n";
+	std::cout << pad << "|";
+	setColor(cGray);
+	std::cout << "                NEON ECHO";
+	setColor(cCyan);
+	std::cout << "                |\n";
+	std::cout << pad << "|                                          |\n";
+	std::cout << pad << "+------------------------------------------+\n";
 	setColor(cWhite);
 }
 
@@ -236,8 +224,7 @@ void Game::mainMenu()
 		printTopLine();
 		printLogo();
 
-		printCentered("~ 在霓虹与废墟之间，活到最后 ~", cMagenta);
-		printCentered("CYBERPUNK MUD  v0.1.0", cCyan);
+		printCentered("赛博朋克 · 回合制冒险", cGray);
 		std::cout << "\n";
 
 		int width = consoleWidth();
@@ -501,8 +488,8 @@ bool Game::chapter(int num)
 	printRhythm(chapterTag + "1.txt", true, playerName_, 20);
 	printRhythm(chapterTag + "2.txt", true, playerName_, 20);
 
-	// 每章视作一次“回到安全区”，开打前回满血与能量，保证体验连贯。
-	player.restoreToFull();
+	// 开打前只回满能量；血量沿用上一关的剩余，保持战斗压力。
+	player.restoreEnergyToFull();
 
 	clearKeys();
 	std::cout << "\n\n按任意键进入战斗...\n";
@@ -518,13 +505,8 @@ bool Game::chapter(int num)
 	bool won = player.battle(player, foe);
 
 	// 战斗内部用 std::cin，结束后清掉残留输入，避免干扰后续 _getch。
+	// 战斗结束时 battle() 已暂停并清屏，这里无需再次停顿。
 	clearCin();
-
-	// 战斗结束后给一小段停顿，避免结果一闪而过。
-	clearKeys();
-	std::cout << "\n按任意键继续...\n";
-	_getch();
-	clearKeys();
 
 	if (!won)
 	{
@@ -533,6 +515,21 @@ bool Game::chapter(int num)
 
 	// 胜利：回写房间解锁状态。
 	unlockRoomAfterChapter(num);
+
+	// 通关奖励：在现有血量基础上随机恢复一段（约为最大生命的 20%~40%），
+	// 不会直接回满，让玩家在之后的战斗里需要掂量补给。
+	{
+		const int maxHp = player.getMHp();
+		const int healAmount = getRandomInt(maxHp / 5, maxHp * 2 / 5);
+		const int before = player.getHp();
+		player.heal(healAmount);
+		const int healed = player.getHp() - before;
+		setColor(cGreen);
+		std::cout << "\n\t\t战后休整，恢复了 " << healed << " 点生命。";
+		setColor(cGray);
+		std::cout << "（" << player.getHp() << "/" << player.getMHp() << "）\n";
+		setColor(cWhite);
+	}
 
 	// 每过一关自动存档一次，避免进度丢失。
 	if (saveManager.save(SAVE_FILE, player, rooms))
