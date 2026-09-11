@@ -3,6 +3,12 @@
 #include <algorithm>
 #include <iostream>
 #include <random>
+#include <cstdlib>
+#include <conio.h>
+
+#define NOMINMAX
+#include <windows.h>
+
 #include "Enemy.h"
 #include "Player.h"
 
@@ -10,6 +16,74 @@ namespace
 {
 // 随机数生成器（匿名命名空间内，仅本文件可见）
 std::mt19937 rng(std::random_device{}());
+
+// ============================ 控制台 UI 辅助 ============================
+// 这些函数只负责显示效果，不参与任何战斗数值计算。
+
+void clearScreen()
+{
+	system("cls");
+}
+
+// 战斗结算后：先停留让玩家看清胜负提示，按键后再清屏。
+void pauseThenClear()
+{
+	std::cout << "\n  按任意键继续...";
+	std::cout.flush();
+	_getch();
+	clearScreen();
+}
+
+void setTextColor(int color)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), static_cast<WORD>(color));
+}
+
+void resetTextColor()
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+}
+
+// 画一条固定 20 格的 HP 条，颜色随剩余血量比例变化（绿/黄/红）。
+void drawHpBar(const char* label, int current, int maxHp)
+{
+	if (maxHp <= 0)
+	{
+		maxHp = 1;
+	}
+	const int barWidth = 20;
+	int filled = current * barWidth / maxHp;
+	if (filled < 0)
+	{
+		filled = 0;
+	}
+	if (filled > barWidth)
+	{
+		filled = barWidth;
+	}
+
+	const int percent = current * 100 / maxHp;
+	int color = 0x0A; // 绿色
+	if (percent < 30)
+	{
+		color = 0x0C; // 红色
+	}
+	else if (percent < 60)
+	{
+		color = 0x0E; // 黄色
+	}
+
+	std::cout << "  " << label;
+	setTextColor(color);
+	std::cout << " [";
+	for (int i = 0; i < barWidth; ++i)
+	{
+		std::cout << (i < filled ? "█" : "░");
+	}
+	std::cout << "] ";
+	resetTextColor();
+	std::cout << current << "/" << maxHp << "\n";
+}
 } // namespace
 
 int getRandomInt(int min, int max)
@@ -202,6 +276,18 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 	enemy->clearAllStatus();
 	player->beginBattle();
 
+	// 进入战斗：先清屏，再显示战斗横幅与双方状态。
+	clearScreen();
+	setTextColor(0x0D); // 亮洋红
+	std::cout << "\n  ============================================\n";
+	std::cout << "               战 斗 开 始\n";
+	std::cout << "  ============================================\n";
+	resetTextColor();
+	std::cout << "\n  遭遇了「" << enemy->getName() << "」！\n\n";
+	drawHpBar("你的 HP", player->getHp(), player->getMHp());
+	drawHpBar("敌人 HP", enemy->getHp(), enemy->getMHp());
+	std::cout << "\n  你的能量：" << player->getEnergy() << " / " << player->getMEnergy() << "\n\n";
+
 	int choose = 0;
 	while (true)
 	{
@@ -213,10 +299,10 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 			break;
 		}
 
-		std::cout << "\n你的血量：" << player->getHp() << "/" << player->getMHp()
-			<< "  能量：" << player->getEnergy() << "/" << player->getMEnergy() << "\n";
-		std::cout << "敌人血量：" << enemy->getHp() << "/" << enemy->getMHp() << "\n\n";
-		std::cout << "1.普通攻击  2.使用技能  3.使用道具  4.防御  ";
+		drawHpBar("你的 HP", player->getHp(), player->getMHp());
+		drawHpBar("敌人 HP", enemy->getHp(), enemy->getMHp());
+		std::cout << "\n  你的能量：" << player->getEnergy() << " / " << player->getMEnergy() << "\n\n";
+		std::cout << "  1.普通攻击  2.使用技能  3.使用道具  4.防御  ";
 		std::cin >> choose;
 		if (std::cin.fail())
 		{
@@ -354,9 +440,12 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		// 玩家击杀敌人 → 胜利
 		if (enemy->isBattleOver())
 		{
-			std::cout << "\n你赢了！\n";
+			setTextColor(0x0A);
+			std::cout << "\n  你赢了！\n";
+			resetTextColor();
 			player->addExp(enemy->getExpReward());
 			player->addGold(enemy->getGoldReward());
+			pauseThenClear();
 			return true;
 		}
 
@@ -364,9 +453,12 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		enemy->processStatusStartTurn();
 		if (enemy->isBattleOver())
 		{
-			std::cout << "\n你赢了！\n";
+			setTextColor(0x0A);
+			std::cout << "\n  你赢了！\n";
+			resetTextColor();
 			player->addExp(enemy->getExpReward());
 			player->addGold(enemy->getGoldReward());
+			pauseThenClear();
 			return true;
 		}
 
@@ -430,7 +522,10 @@ bool BattleSystem::battle(BattleSystem& p, BattleSystem& e)
 		// 玩家被击杀 → 失败
 		if (player->isBattleOver())
 		{
-			std::cout << "\n你输了！\n";
+			setTextColor(0x0C);
+			std::cout << "\n  你输了！\n";
+			resetTextColor();
+			pauseThenClear();
 			return false;
 		}
 	}

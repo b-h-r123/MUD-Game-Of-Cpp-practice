@@ -82,6 +82,9 @@ public:
 	// 战间整备：把当前 HP / 能量补到有效上限。
 	void restoreToFull();
 
+	// 只把能量补满（章节间休整时用；血量不再回满）。
+	void restoreEnergyToFull();
+
 	// ---------- 存档 ----------
 	// 单行文本序列化；deserialize 失败时不保证状态不变（由 SaveManager 兜底）。
 	std::string serialize() const;

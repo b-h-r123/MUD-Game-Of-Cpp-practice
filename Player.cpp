@@ -357,6 +357,12 @@ void Player::restoreToFull()
 	tempEffects_.clear();
 }
 
+void Player::restoreEnergyToFull()
+{
+	b_Energy = getMEnergy();
+	tempEffects_.clear();
+}
+
 // ============================ 存档 ============================
 std::string Player::serialize() const
 {
